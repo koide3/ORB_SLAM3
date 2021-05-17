@@ -173,6 +173,8 @@ public:
 
     void ChangeDataset();
 
+    Atlas* getAtlas() { return mpAtlas; }
+
 #ifdef REGISTER_TIMES
     void InsertRectTime(double& time);
 
