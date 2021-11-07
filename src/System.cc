@@ -42,7 +42,8 @@ System::System(
   const bool bUseViewer,
   const int initFr,
   const string& strSequence,
-  const string& strLoadingFile)
+  const string& strLoadingFile,
+  bool enableLoopDetection)
 : mSensor(sensor),
   mpViewer(static_cast<Viewer*>(NULL)),
   mbReset(false),
@@ -122,7 +123,9 @@ System::System(
 
   // Initialize the Loop Closing thread and launch
   mpLoopCloser = new LoopClosing(mpAtlas, mpKeyFrameDatabase, mpVocabulary, mSensor != MONOCULAR);  // mSensor!=MONOCULAR);
-  mptLoopClosing = new thread(&ORB_SLAM3::LoopClosing::Run, mpLoopCloser);
+  if (enableLoopDetection) {
+    mptLoopClosing = new thread(&ORB_SLAM3::LoopClosing::Run, mpLoopCloser);
+  }
 
   // Initialize the Viewer thread and launch
   if (bUseViewer) {
